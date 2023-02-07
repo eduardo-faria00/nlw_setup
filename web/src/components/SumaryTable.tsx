@@ -6,9 +6,9 @@ import { HabitDay } from './HabitDay'
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
-const sumaryDates = generateDatesFromYearBegining()
-const minimumSumaryDateSize = 18 * 7 // 18 weeks
-const amountOfDaysToFill = minimumSumaryDateSize - sumaryDates.length
+const summaryDates = generateDatesFromYearBegining()
+const minimumSummaryDateSize = 18 * 7 // 18 weeks
+const amountOfDaysToFill = minimumSummaryDateSize - summaryDates.length
 
 type Summary = Array<{
   id: string
@@ -42,20 +42,21 @@ export function SumaryTable() {
       </div>
 
       <div className="grid grid-rows-7 grid-flow-col gap-3">
-        {sumaryDates.map((date) => {
-          const dayInSummary = summary.find((day) => {
-            return dayjs(date).isSame(day.date, 'day')
-          })
+        {summary.length > 0 &&
+          summaryDates.map((date) => {
+            const dayInSummary = summary.find((day) => {
+              return dayjs(date).isSame(day.date, 'day')
+            })
 
-          return (
-            <HabitDay
-              key={date.toString()}
-              date={date}
-              amount={dayInSummary?.amount}
-              completed={dayInSummary?.completed}
-            />
-          )
-        })}
+            return (
+              <HabitDay
+                key={date.toString()}
+                date={date}
+                amount={dayInSummary?.amount}
+                defaultCompleted={dayInSummary?.completed}
+              />
+            )
+          })}
 
         {amountOfDaysToFill > 0 &&
           Array.from({ length: amountOfDaysToFill }).map((_, index) => {
